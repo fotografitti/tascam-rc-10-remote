@@ -1,8 +1,8 @@
-TASCAM RC-10 remote control
+TASCAM RC-10 as IR control
 ===========================
 
 This is a replacement for a TASCAM RC-10 remote control running on
-Arduino.
+Arduino via IR sending LED
 
 Protocol
 --------
@@ -14,6 +14,12 @@ is ground.
 
 The protocol is standard TTL-level UART (mark is 3.3V, space is 0V)
 running at 9600 baud, 8 data bits, even parity, and 1 stop bit.
+
+Here comes in handy an IR Receiver with a 56 kHz carrier frequency:
+The 	TSOP4856 can run on 2.5V and is able to transport the 9600 baud.
+So we only need to modulate the carrier frequence on top of the already
+done work here to the serial output.
+The receiver only needs to be soldered to a 2.5mm TRR jack.
 
 The RC-10 sends a start byte when a button is pressed, a repeat byte
 every 100ms afterward while the button is held down, and an end byte when
