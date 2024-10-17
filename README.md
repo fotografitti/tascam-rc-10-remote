@@ -1,4 +1,4 @@
-TASCAM RC-10 as IR control
+TASCAM RC-10 as IR remote-control
 ===========================
 
 This is a replacement for a TASCAM RC-10 remote control running on
