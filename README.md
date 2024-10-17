@@ -49,10 +49,9 @@ Note: F3 is marked (+) and F4 is marked (-).
 Features
 --------
 
-This replacement software also supports a "turbo" mode which increases
-the repeat rate of buttons to 2x the normal rate. This is useful for
-impatient people. :) Turbo mode can be toggled with a press of the turbo
-button.
+This software is designed so that it only wakes up on button press and goes
+to sleep again, so the IR-RC will hopefully last long with abattery and needs
+no turn-off switch.
 
 License
 -------
