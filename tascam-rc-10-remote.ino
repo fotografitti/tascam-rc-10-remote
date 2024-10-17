@@ -44,7 +44,6 @@
  *  8 3/4 [SOLO]
  *  9 mic input level +
  * 10 mic input level -
- * 11 turbo
  *
  * (The actual pin mapping is currently up in the air.)
  *
@@ -90,17 +89,15 @@ static const struct function functions[] = {
 	{ 20, 29, }, //  8 3/4 [SOLO]
 	{ 21, 30, }, //  9 mic input level +
 	{ 22, 31, }, // 10 mic input level -
-	{ 23,  0, }, // 11 turbo
+	
 };
 
-#define TURBO_LED_PIN 13
-#define TURBO_BUTTON_PIN 23
+#define TONE_56_PIN 13
+#define WAKEUP_PIN 12
 
 #define FIRST_REPEAT_PERIOD 100
 #define REPEAT_PERIOD 100
 
-#define TURBO_FIRST_REPEAT_PERIOD 100
-#define TURBO_REPEAT_PERIOD 50
 
 /**** END OF CONFIGURABLES ****/
 
@@ -109,7 +106,7 @@ static const uint8_t numButtonInputPins = SIZEOF_ARRAY(functions);
 
 static uint8_t firstRepeatPeriod = FIRST_REPEAT_PERIOD;
 static uint8_t repeatPeriod = REPEAT_PERIOD;
-static bool turboRepeat = false;
+
 
 #define EACHBUTTON(b) (uint8_t b = 1; b < numButtonInputPins; ++b)
 
@@ -119,9 +116,7 @@ void setup()
 	for EACHBUTTON(b) {
 		pinMode(functions[b].pin, INPUT_PULLUP);
 	}
-	pinMode(TURBO_LED_PIN, OUTPUT);
-
-	setTurbo(false);
+	
 }
 
 void loop()
@@ -154,27 +149,12 @@ void loop()
 #define REPEAT_MASK 0xC0
 #define END_MASK    0x00
 
-static void setTurbo(bool turbo)
-{
-	turboRepeat = turbo;
-	if (turboRepeat) {
-		repeatPeriod = TURBO_REPEAT_PERIOD;
-		firstRepeatPeriod = TURBO_FIRST_REPEAT_PERIOD;
-		digitalWrite(TURBO_LED_PIN, HIGH);
-	} else {
-		repeatPeriod = REPEAT_PERIOD;
-		firstRepeatPeriod = FIRST_REPEAT_PERIOD;
-		digitalWrite(TURBO_LED_PIN, LOW);
-	}
-}
 
 static void handleButtonPress(uint8_t b)
 {
 	if (functions[b].value) {
 		Serial.write(functions[b].value | START_MASK);
-	} else if (functions[b].pin == TURBO_BUTTON_PIN) {
-		setTurbo(!turboRepeat);
-	}
+		}
 }
 
 static void handleButtonRelease(uint8_t b)
